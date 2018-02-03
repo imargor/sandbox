@@ -8,8 +8,18 @@
 
 <body>
     <script src="https://www.puck-js.com/puck.js"></script>
-    <button onclick="Puck.write('LED1.set();\n');">On!</button>
-    <button onclick="Puck.write('LED1.reset();\n');">Off!</button>
+    <button onclick="Puck.write('digitalWrite(D1,1);\n');">LED #1 ON</button>
+    <button onclick="Puck.write('digitalWrite(D1,0);\n');">LED #1 OFF</button><br>
+    <button onclick="Puck.write('digitalWrite(D2,1);\n');">LED #2 ON</button>
+    <button onclick="Puck.write('digitalWrite(D2,0);\n');">LED #2 OFF</button><br>
+    <button onclick="Puck.write('digitalWrite(D28,1);\n');">LED #3 ON</button>
+    <button onclick="Puck.write('digitalWrite(D28,0);\n');">LED #3 OFF</button><br>
+    <button onclick="Puck.write('digitalWrite(D29,1);\n');">LED #4 ON</button>
+    <button onclick="Puck.write('digitalWrite(D29,0);\n');">LED #4 OFF</button><br>
+    <button onclick="Puck.write('digitalWrite(D30,1);\n');">LED #5 ON</button>
+    <button onclick="Puck.write('digitalWrite(D30,0);\n');">LED #5 OFF</button><br>
+    <button onclick="Puck.write('digitalWrite(D31,1);\n');">LED #6 ON</button>
+    <button onclick="Puck.write('digitalWrite(D31,0);\n');">LED #6 OFF</button><br>
 </body>
 
 </html>
