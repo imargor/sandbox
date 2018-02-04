@@ -2,24 +2,72 @@
 <html lang="en">
 
 <head>
+    <title>Hands On - Web Bluetooth</title>
     <meta charset="utf-8">
-    <title>Demo Application with Puck.js and external connected LEDs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Toogle Switch -->
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 
 <body>
+    <!-- Puck.js implementation -->
     <script src="https://www.puck-js.com/puck.js"></script>
-    <button onclick="Puck.write('digitalWrite(D1,1);\n');">LED #1 ON</button>
-    <button onclick="Puck.write('digitalWrite(D1,0);\n');">LED #1 OFF</button><br>
-    <button onclick="Puck.write('digitalWrite(D2,1);\n');">LED #2 ON</button>
-    <button onclick="Puck.write('digitalWrite(D2,0);\n');">LED #2 OFF</button><br>
-    <button onclick="Puck.write('digitalWrite(D28,1);\n');">LED #3 ON</button>
-    <button onclick="Puck.write('digitalWrite(D28,0);\n');">LED #3 OFF</button><br>
-    <button onclick="Puck.write('digitalWrite(D29,1);\n');">LED #4 ON</button>
-    <button onclick="Puck.write('digitalWrite(D29,0);\n');">LED #4 OFF</button><br>
-    <button onclick="Puck.write('digitalWrite(D30,1);\n');">LED #5 ON</button>
-    <button onclick="Puck.write('digitalWrite(D30,0);\n');">LED #5 OFF</button><br>
-    <button onclick="Puck.write('digitalWrite(D31,1);\n');">LED #6 ON</button>
-    <button onclick="Puck.write('digitalWrite(D31,0);\n');">LED #6 OFF</button><br>
+    <script src="./pck-6leds.js"></script>
+
+    <div class="jumbotron" style="background: linear-gradient(to bottom, #006699 50%,#2a7ea8 80%,#006699 100%)">
+        <div class="container">
+            <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Hands On</h1>
+            <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Web Bluetooth usage</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="alert alert-info alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info!</strong> Only for demonstration with Puck.js
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <h2>Toggle LEDs</h2>
+        </div>
+        <style>
+            .toggle-group {
+                transition: left 0.7s;
+                -webkit-transition: left 0.7s;
+            }
+        </style>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <input type="checkbox" id="led1" onchange="toggleLed1()" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="danger">
+                <label>&nbsp;LED #1</label>
+            </li>
+            <li class="list-group-item">
+                <input type="checkbox" id="led2" onchange="toggleLed2()" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="warning">
+                <label>&nbsp;LED #2</label>
+            </li>
+            <li class="list-group-item">
+                <input type="checkbox" id="led3" onchange="toggleLed3()" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="success">
+                <label>&nbsp;LED #3 </label>
+            </li>
+            <li class="list-group-item">
+                <input type="checkbox" id="led4" onchange="toggleLed4()" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="danger">
+                <label>&nbsp;LED #4 </label>
+            </li>
+            <li class="list-group-item">
+                <input type="checkbox" id="led5" onchange="toggleLed5()" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="warning">
+                <label>&nbsp;LED #5 </label>
+            </li>
+            <li class="list-group-item">
+                <input type="checkbox" id="led6" onchange="toggleLed6()" data-toggle="toggle" data-on="ON" data-off="OFF" data-onstyle="success">
+                <label>&nbsp;LED #6 </label>
+            </li>
+        </ul>
+    </div>
 </body>
 
 </html>
