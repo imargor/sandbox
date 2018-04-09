@@ -83,15 +83,15 @@
                     log('Notifications for temperature enabled');
                     return temperatureChar.addEventListener('characteristicvaluechanged', handleNotifyTemperature);
                 })
-                .then(() => sensorService.getCharacteristic(outputStateCharacteristicUUID))
-                .then(characteristic => {
-                    log('Found output state characteristic');
-                    outputStateChar.startNotifications();
-                })
-                .then(() => {
-                    log('Notifications for output state enabled');
-                    return outputStateChar.addEventListener('characteristicvaluechanged', handleNotifyOutputState);
-                })
+                // .then(() => sensorService.getCharacteristic(outputStateCharacteristicUUID))
+                // .then(characteristic => {
+                //     log('Found output state characteristic');
+                //     outputStateChar.startNotifications();
+                // })
+                // .then(() => {
+                //     log('Notifications for output state enabled');
+                //     return outputStateChar.addEventListener('characteristicvaluechanged', handleNotifyOutputState);
+                // })
                 .then(() => {
                     log('=========== READY ===========');
                 })
