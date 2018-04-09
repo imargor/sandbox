@@ -6,39 +6,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EGE Demo - Web Bluetooth</title>
-    <meta name="description" content="Monitor flow, temperature and output state from a EGE sensor with a Web Bluetooth app">
+    <meta name="description" content="Monitor flow, flow and output state from a EGE sensor with a Web Bluetooth app">
     <!-- TODO: manfifest -->
     <!-- TODO: favicon -->
 
     <!-- JavaScript -->
     <script>
-        const serviceUUID = 'ef680100-9b35-4933-9b10-52ffa9740042';
-        const optionalServicesUUID = [
-            "ef680200-9b35-4933-9b10-52ffa9740042",
-            "ef680300-9b35-4933-9b10-52ffa9740042",
-            "ef680400-9b35-4933-9b10-52ffa9740042",
-            "ef680500-9b35-4933-9b10-52ffa9740042"
-        ];
-
-        //Enviroment
-        const enviromentServiesUUID = 'ef680200-9b35-4933-9b10-52ffa9740042';
-        const tempheratureCharacteristicUUID = "ef680201-9b35-4933-9b10-52ffa9740042";
-        const pressureCharacteristicUUID = "ef680202-9b35-4933-9b10-52ffa9740042";
-        const humidityCharacteristicUUID = "ef680203-9b35-4933-9b10-52ffa9740042";
-        const gasCharacteristicUUID = "ef680204-9b35-4933-9b10-52ffa9740042";
-        const colorCharacteristicUUID = "ef680205-9b35-4933-9b10-52ffa9740042";
-        const enviromentConfigurationCharacteristicUUID = "ef680206-9b35-4933-9b10-52ffa9740042";
+        const sensorServiceUUID = '389701f6-2b73-11e8-b467-0ed5f89f718b';
+        const flowCharacteristicUUID = '389701f7-2b73-11e8-b467-0ed5f89f718b';
+        const temperatureCharacteristicUUID = '389701f8-2b73-11e8-b467-0ed5f89f718b';
+        const outputStateCharacteristicUUID = '389701f9-2b73-11e8-b467-0ed5f89f718b';
 
         var bleDevice;
         var bleServer;
 
-        var enviromentService;
-        var enviromentConfigurationChar;
+        var sensorService;
+        var flowChar;
         var temperatureChar;
-        var pressureChar;
-        var humidityChar;
-        var gasChar;
-        var colorChar;
+        var outputStateChar;
 
 
         window.onload = function () {
@@ -53,12 +38,11 @@
             }
             log('=============================');
             log('Requesting Bluetooth Device...');
-            // RequestDevice must be in click handler (or other user inited events)
+
             navigator.bluetooth.requestDevice({
                     filters: [{
-                        services: [serviceUUID],
-                        optionalServices: optionalServicesUUID
-                        //"name": "Thingy"
+                        services: [sensorServiceUUID],
+                        //"name": "SDNC"
                     }]
                 })
                 .then(device => {
@@ -76,45 +60,24 @@
                     bleServer = server;
                     log('Found Server', server);
                 })
-                .then(() => bleServer.getPrimaryService(enviromentServiesUUID))
+                .then(() => bleServer.getPrimaryService(sensorServiceUUID))
                 .then(service => {
-                    log('Found enviroment service', service);
-                    enviromentService = service;
+                    log('Found sensor service', service);
+                    sensorService = service;
                 })
-                .then(() => enviromentService.getCharacteristic(enviromentConfigurationCharacteristicUUID))
+                .then(() => sensorService.getCharacteristic(flowCharacteristicUUID))
                 .then(characteristic => {
-                    log('Found enviroment configuration characteristic');
-                    enviromentConfigurationChar = characteristic;
+                    log('Found flow characteristic');
+                    flowChar = characteristic;
+                    return flowChar.startNotifications();
                 })
                 .then(() => {
-                    const temperatureInterval = 1000; //min="100" max="5000"
-                    const pressureInterval = 5000; //min="50" max="5000"
-                    const humidityInterval = 5000; //min="100" max="5000"
-                    const colorInterval = 5000; //min="200" max="5000"
-                    const gasMode = 2; //1: 1s interval, 2 = 10s interval, 3 = 60s interval 
-                    const redCalibration = 1; //min="0" max="255"
-                    const greenCalibration = 1; //min="0" max="255"
-                    const blueCalibration = 1; //min="0" max="255"
-
-                    let configuration = new Uint8Array(12);
-                    configuration[0] = temperatureInterval & 0xFF;
-                    configuration[1] = (temperatureInterval >> 8) & 0xFF;
-                    configuration[2] = pressureInterval & 0xFF;
-                    configuration[3] = (pressureInterval >> 8) & 0xFF;
-                    configuration[4] = humidityInterval & 0xFF;
-                    configuration[5] = (humidityInterval >> 8) & 0xFF;
-                    configuration[6] = colorInterval & 0xFF;
-                    configuration[7] = (colorInterval >> 8) & 0xFF;
-                    configuration[8] = gasMode;
-                    configuration[9] = redCalibration;
-                    configuration[10] = greenCalibration;
-                    configuration[11] = blueCalibration;
-                    log("Enviroment configuration is about to be written", configuration);
-                    return enviromentConfigurationChar.writeValue(configuration);
+                    log('Notifications for flow enabled');
+                    return flowChar.addEventListener('characteristicvaluechanged', handleNotifyFlow);
                 })
-                .then(() => enviromentService.getCharacteristic(tempheratureCharacteristicUUID))
+                .then(() => sensorService.getCharacteristic(temperatureCharacteristicUUID))
                 .then(characteristic => {
-                    log('Found temperature characteristic');
+                    log('Found temeperature characteristic');
                     temperatureChar = characteristic;
                     return temperatureChar.startNotifications();
                 })
@@ -122,35 +85,14 @@
                     log('Notifications for temperature enabled');
                     return temperatureChar.addEventListener('characteristicvaluechanged', handleNotifyTemperature);
                 })
-                .then(() => enviromentService.getCharacteristic(pressureCharacteristicUUID))
+                .then(() => sensorService.getCharacteristic(outputStateCharacteristicUUID))
                 .then(characteristic => {
-                    log('Found pressure characteristic');
-                    pressureChar = characteristic;
-                    return pressureChar.startNotifications();
+                    log('Found output state characteristic');
+                    outputStateChar.startNotifications();
                 })
                 .then(() => {
-                    log('Notifications for pressure enabled');
-                    return pressureChar.addEventListener('characteristicvaluechanged', handleNotifyPressure);
-                })
-                .then(() => enviromentService.getCharacteristic(humidityCharacteristicUUID))
-                .then(characteristic => {
-                    log('Found humidity characteristic');
-                    humidityChar = characteristic;
-                    return humidityChar.startNotifications();
-                })
-                .then(() => {
-                    log('Notifications for humidity enabled');
-                    return humidityChar.addEventListener('characteristicvaluechanged', handleNotifyHumidity);
-                })
-                .then(() => enviromentService.getCharacteristic(gasCharacteristicUUID))
-                .then(characteristic => {
-                    log('Found gas characteristic');
-                    gasChar = characteristic;
-                    return gasChar.startNotifications();
-                })
-                .then(() => {
-                    log('Notifications for gas enabled');
-                    return gasChar.addEventListener('characteristicvaluechanged', handleNotifyGas);
+                    log('Notifications for output state enabled');
+                    return outputStateChar.addEventListener('characteristicvaluechanged', handleNotifyOutputState);
                 })
                 .then(() => {
                     log('=========== READY ===========');
@@ -175,35 +117,28 @@
             }
         }
 
+        function handleNotifyFlow(event) {
+            const flowValue = event.target.value;
+            console.log("flowValue", flowValue.length, flowValue.getUint8())
+
+            const integer = flowValue.getInt8(0);
+            const decimal = flowValue.getUint8(1);
+            const flow = integer + ',' + decimal;
+            log('flow event: ' + flow, integer, decimal);
+        }
+
         function handleNotifyTemperature(event) {
             const temperatureValue = event.target.value;
-            console.log("temperatureValue", temperatureValue.length, temperatureValue.getUint8())
-
-            const integer = temperatureValue.getInt8(0);
-            const decimal = temperatureValue.getUint8(1);
+            const integer = temperatureValue.getInt32(0, true);
+            const decimal = temperatureValue.getUint8(4);
             const temperature = integer + ',' + decimal;
-            log('temperature event: ' + temperature, integer, decimal);
+            log('temperature event: ' + temperature, integer, decimal)
         }
 
-        function handleNotifyPressure(event) {
-            const pressureValue = event.target.value;
-            const integer = pressureValue.getInt32(0, true);
-            const decimal = pressureValue.getUint8(4);
-            const pressure = integer + ',' + decimal;
-            log('pressure event: ' + pressure, integer, decimal)
-        }
-
-        function handleNotifyHumidity(event) {
-            const humidityValue = event.target.value;
-            const humidity = humidityValue.getUint8(0);
-            log('humidity event: ' + humidity + 'RH')
-        }
-
-        function handleNotifyGas(event) {
-            const gasValue = event.target.value;
-            const eCO2ppm = gasValue.getUint16(0, true);
-            const TVOCppb = gasValue.getUint16(2, true);
-            log('gas event: CO2: ' + eCO2ppm + 'ppm, TVOC: ' + TVOCppb + 'ppb');
+        function handleNotifyOutputState(event) {
+            const OutputStateValue = event.target.value;
+            const outputState = OutputStateValue.getUint8(0);
+            log('outputState event: ' + outputState + 'False/True')
         }
 
 
