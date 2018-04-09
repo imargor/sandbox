@@ -40,10 +40,8 @@
             log('Requesting Bluetooth Device...');
 
             navigator.bluetooth.requestDevice({
-                    //filters: [{
-                        //services: [sensorServiceUUID],
-                        //"name": "SDNC"
-                    //}]
+                    acceptAllDevices: true,
+                    optionalServices: [sensorServiceUUID]
                 })
                 .then(device => {
                     bleDevice = device;
