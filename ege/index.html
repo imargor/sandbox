@@ -118,25 +118,26 @@
         function handleNotifyFlow(event) {
             const flowValue = event.target.value;
             console.log("flowValue", flowValue.length, flowValue.getUint8())
+            log("flowValue", flowValue.length, flowValue.getUint8())
 
-            const integer = flowValue.getInt8(0);
-            const decimal = flowValue.getUint8(1);
-            const flow = integer + ',' + decimal;
-            log('flow event: ' + flow, integer, decimal);
+            //const integer = flowValue.getInt8(0);
+            //const decimal = flowValue.getUint8(1);
+            //const flow = integer + ',' + decimal;
+            //log('flow event: ' + flow, integer, decimal);
         }
 
         function handleNotifyTemperature(event) {
-            const temperatureValue = event.target.value;
-            const integer = temperatureValue.getInt32(0, true);
-            const decimal = temperatureValue.getUint8(4);
-            const temperature = integer + ',' + decimal;
-            log('temperature event: ' + temperature, integer, decimal)
+            //const temperatureValue = event.target.value;
+            //const integer = temperatureValue.getInt32(0, true);
+            //const decimal = temperatureValue.getUint8(4);
+            //const temperature = integer + ',' + decimal;
+            //log('temperature event: ' + temperature, integer, decimal)
         }
 
         function handleNotifyOutputState(event) {
-            const OutputStateValue = event.target.value;
-            const outputState = OutputStateValue.getUint8(0);
-            log('outputState event: ' + outputState + 'FalseTrue')
+            //const OutputStateValue = event.target.value;
+            //const outputState = OutputStateValue.getUint8(0);
+            //log('outputState event: ' + outputState + 'FalseTrue')
         }
 
 
