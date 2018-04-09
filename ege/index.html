@@ -75,7 +75,7 @@
                 })
                 .then(() => sensorService.getCharacteristic(temperatureCharacteristicUUID))
                 .then(characteristic => {
-                    log('Found temeperature characteristic');
+                    log('Found temperature characteristic');
                     temperatureChar = characteristic;
                     return temperatureChar.startNotifications();
                 })
@@ -136,7 +136,7 @@
         function handleNotifyOutputState(event) {
             const OutputStateValue = event.target.value;
             const outputState = OutputStateValue.getUint8(0);
-            log('outputState event: ' + outputState + 'False/True')
+            log('outputState event: ' + outputState + 'FalseTrue')
         }
 
 
