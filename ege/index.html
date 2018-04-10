@@ -128,10 +128,10 @@
 
         function handleNotifyTemperature(event) {
             const temperatureValue = event.target.value;
-            const integer = temperatureValue.getInt16(0);
-            //const decimal = temperatureValue.getUint8(4);
-            //const temperature = integer + ',' + decimal;
-            log('temperature event: ' + integer) //temperature, integer, decimal)
+            const integer = temperatureValue.getInt8(0);
+            const decimal = temperatureValue.getUint8(1);
+            const temperature = integer + ',' + decimal;
+            log('temperature event: ' + temperature, integer, decimal)
         }
 
         function handleNotifyOutputState(event) {
