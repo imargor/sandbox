@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EGE HANDS ON - Browser interacts with sensor via Web Bluetooth</title>
+    <title>EGE HANDS ON - Browser interacts with sensor via Web Bluetooth </title>
     <meta name="description" content="Monitor flow, temperature and output state from a EGE sensor with a Web Bluetooth app">
     <!-- TODO: manfifest -->
     <!-- TODO: favicon -->
@@ -68,7 +68,9 @@
                         UUIDs: device.uuids,
                         Device: device
                     });
+                    document.querySelector("#deviceName").innerHTML = device.name;
                     log('Connected to device: ' + device.name);
+
                     return device.gatt.connect();
                 })
                 .then(server => {
@@ -143,6 +145,10 @@
             if (bleDevice.gatt.connected) {
                 bleDevice.gatt.disconnect();
                 log('Bluetooth Device connected: ' + bleDevice.gatt.connected);
+                document.querySelector("#deviceName").innerHTML = "";
+                document.querySelector("#fieldFlow").innerHTML = "";
+                document.querySelector("#fieldTemperature").innerHTML = "";
+                document.querySelector("#fieldOutputState").innerHTML = "";
             } else {
                 log('Bluetooth Device is already disconnected');
             }
@@ -152,6 +158,7 @@
             const flowValue = event.target.value;
             const flowRaw = flowValue.getInt16(0);
             const flow = flowRaw / 1000;
+            document.querySelector("#fieldFlow").innerHTML = flow;
             log('Flow event: ' + flow + ' L/min')
         }
 
@@ -159,6 +166,7 @@
             const temperatureValue = event.target.value;
             const tempRaw = temperatureValue.getInt16(0);
             const temp = tempRaw / 10;
+            document.querySelector("#fieldTemperature").innerHTML = temp;
             log('Temperature event: ' + temp + ' °C')
         }
 
@@ -169,14 +177,13 @@
             if (outputStateRaw == 1) {
                 outputState = true;
             }
+            document.querySelector("#fieldOutputState").innerHTML = outputState;
             log('Output state event: ' + outputState);
         }
 
 
         function log(text) {
-            console.log(arguments);
-            const logElm = document.querySelector('#log');
-            logElm.textContent = text + '\n' + logElm.textContent;
+            console.log(text + '\n');
         }
     </script>
 </head>
@@ -186,7 +193,6 @@
         <div class="container">
             <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">EGE HANDS ON</h1>
             <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Browser interacts with sensor via Web Bluetooth</p>
-            <p style="color: #095277;font-size: small">2018-04-11 // mgo // 0.21</p>
         </div>
     </div>
 
@@ -195,11 +201,60 @@
             <button type="button" class="btn btn-default" id="connect">Connect</button>
             <button type="button" class="btn btn-default" id="disconnect">Disconnect</button>
         </div>
-        <br><br>
-        <div>
-            <pre id="log"></pre>
+        <br>
+        <br>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 id="deviceName"></h3>
+                </div>
+                <div class="panel-body">
+                    <big>
+                        <div class="table-responsive-sm">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Value</th>
+                                        <th>Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Flow:</td>
+                                        <td id="fieldFlow">---</td>
+                                        <td>L/min</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temperature:</td>
+                                        <td id="fieldTemperature">---</td>
+                                        <td>°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Output state:</td>
+                                        <td id="fieldOutputState">---</td>
+                                        <td>false/true</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </big>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="alert alert-info alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info!</strong> Open website with console style output
+            <a href="index2.html">here</a>.
+        </div>
+    </div>
+    <div class="container">
+        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.32</p>
+    </div>
+
 </body>
 
 </html>
