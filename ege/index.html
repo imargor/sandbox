@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<!-- 2018-04-09 mgo -->
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EGE Demo - Web Bluetooth</title>
+    <title>EGE Hands On - Web Bluetooth interacts with sensor</title>
     <meta name="description" content="Monitor flow, temperature and output state from a EGE sensor with a Web Bluetooth app">
     <!-- TODO: manfifest -->
     <!-- TODO: favicon -->
@@ -38,7 +37,15 @@
 
         function connect() {
             if (!navigator.bluetooth) {
-                return log('Web Bluetooth API is not available in browser.');
+                return log(
+                    'Web Bluetooth API is not available in current used browser!' + '\n' +
+                    '- Android: Use Chrome browser' + '\n' +
+                    '- iOS: Use App WebBLE' + '\n' +
+                    '- Linux & macOS: Use Chrome browser with activated flag' + '\n' +
+                    '  chrome://flags/#enable-experimental-web-platform-features' + '\n' +
+                    '- Windows 10: Use Chrome browser with plugin polyfill' + '\n' +
+                    '  https://github.com/urish/web-bluetooth-polyfill'
+                );
             }
             log('=============================');
             log('Requesting Bluetooth Device...');
@@ -87,15 +94,15 @@
                     log('Notifications for temperature enabled');
                     return temperatureChar.addEventListener('characteristicvaluechanged', handleNotifyTemperature);
                 })
-                // .then(() => sensorService.getCharacteristic(outputStateCharacteristicUUID))
-                // .then(characteristic => {
-                //     log('Found output state characteristic');
-                //     outputStateChar.startNotifications();
-                // })
-                // .then(() => {
-                //     log('Notifications for output state enabled');
-                //     return outputStateChar.addEventListener('characteristicvaluechanged', handleNotifyOutputState);
-                // })
+                .then(() => sensorService.getCharacteristic(outputStateCharacteristicUUID))
+                .then(characteristic => {
+                    log('Found output state characteristic');
+                    outputStateChar.startNotifications();
+                })
+                .then(() => {
+                    log('Notifications for output state enabled');
+                    return outputStateChar.addEventListener('characteristicvaluechanged', handleNotifyOutputState);
+                })
                 .then(() => {
                     log('=========== READY ===========');
                 })
@@ -134,9 +141,13 @@
         }
 
         function handleNotifyOutputState(event) {
-            //const OutputStateValue = event.target.value;
-            //const outputState = OutputStateValue.getUint8(0);
-            //log('outputState event: ' + outputState + 'FalseTrue')
+            var outputState = false;
+            const outputStateValue = event.target.value;
+            const outputStateRaw = outputStateValue.getUint16(0);
+            if (outputStateRaw == 1) {
+                outputState = true;
+            }
+            log('Output state event: ' + outputState);
         }
 
 
@@ -152,8 +163,8 @@
     <div class="jumbotron" style="background: linear-gradient(to bottom, #006699 50%,#0f70a0 80%,#006699 100%)">
         <div class="container">
             <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">EGE Hands On</h1>
-            <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Web Bluetooth with sensors</p>
-            <p style="color: #095277;font-size: small">Rev.: 0.8</p>
+            <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Web Bluetooth interacts with sensor</p>
+            <p style="color: #095277;font-size: small">2018-04-11 // mgo // 0.9</p>
         </div>
     </div>
 
