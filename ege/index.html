@@ -119,7 +119,7 @@
             const flowValue = event.target.value;
             const flowRaw = flowValue.getInt16(0);
             const flow = flowRaw / 1000;
-            log('Temperature event: ' + temp + ' L/min')
+            log('Flow event: ' + flow + ' L/min')
         }
 
         function handleNotifyTemperature(event) {
@@ -146,7 +146,7 @@
 
 <body>
     <h1>EGE Demo - Web Bluetooth</h1>
-    <p>v0.6</p>
+    <p>v0.7</p>
     <button id="connect">Connect</button>
     <button id="disconnect">Disonnect</button>
     <div>
