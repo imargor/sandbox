@@ -129,7 +129,9 @@
         function handleNotifyTemperature(event) {
             const temperatureValue = event.target.value;
             const integer = temperatureValue.getInt8(0);
+            log('temperature integer:' + integer);
             const decimal = temperatureValue.getUint8(1);
+            log('temperature decimal:' + decimal);
             const temperature = integer + '.' + decimal + ' deg';
             log('temperature event: ' + temperature);
             log('temp: ', integer, decimal)
