@@ -89,7 +89,7 @@
                     return flowChar.addEventListener('characteristicvaluechanged', handleNotifyFlow);
                 })
                 .then(() => {
-                    log('Trigger initial reading flow value...');
+                    log('Initial reading flow value...');
                     return flowChar.readValue();
                 })
                 .then(() => sensorService.getCharacteristic(temperatureCharacteristicUUID))
@@ -103,7 +103,7 @@
                     return temperatureChar.addEventListener('characteristicvaluechanged', handleNotifyTemperature);
                 })
                 .then(() => {
-                    log('Trigger initial reading temperature value...');
+                    log('Initial reading temperature value...');
                     return temperatureChar.readValue();
                 })
                 .then(() => sensorService.getCharacteristic(outputStateCharacteristicUUID))
@@ -117,8 +117,8 @@
                     return outputStateChar.addEventListener('characteristicvaluechanged', handleNotifyOutputState);
                 })
                 .then(() => {
-                    log('Trigger initial reading output state value...');
-                    return flowChar.readValue();
+                    log('Initial reading output state value...');
+                    return outputStateChar.readValue();
                 })
                 .then(() => {
                     log('=========== READY ===========');
@@ -181,7 +181,7 @@
         <div class="container">
             <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #e4aa2c">EGE Hands On</h1>
             <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #e4aa2c">Web Bluetooth interacts with sensor</p>
-            <p style="color: #ca9626;font-size: small">2018-04-11 // mgo // 0.24</p>
+            <p style="color: #ca9626;font-size: small">2018-04-11 // mgo // 0.25</p>
         </div>
     </div>
 
