@@ -10,6 +10,10 @@
     <!-- TODO: manfifest -->
     <!-- TODO: favicon -->
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!-- JavaScript -->
     <script>
         const sensorServiceUUID = '389701f6-2b73-11e8-b467-0ed5f89f718b';
@@ -145,12 +149,21 @@
 </head>
 
 <body>
-    <h1>EGE Demo - Web Bluetooth</h1>
-    <p>v0.7</p>
-    <button id="connect">Connect</button>
-    <button id="disconnect">Disonnect</button>
-    <div>
-        <pre id="log"></pre>
+    <div class="jumbotron" style="background: linear-gradient(to bottom, #006699 50%,#0f70a0 80%,#006699 100%)">
+        <div class="container">
+            <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">EGE Hands On</h1>
+            <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Web Bluetooth with sensors</p>
+            <p style="color: #095277;font-size: small">Rev.: 0.8</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <button id="connect">Connect</button>
+        <button id="disconnect">Disonnect</button>
+        <p></p>
+        <div>
+            <pre id="log"></pre>
+        </div>
     </div>
 </body>
 
