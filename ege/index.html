@@ -39,6 +39,15 @@
 
         function connect() {
             if (!navigator.bluetooth) {
+                alert(
+                    'Web Bluetooth API is not available in current used browser!' + '\n\n' +
+                    '- Android: Use Chrome browser' + '\n' +
+                    '- iOS: Use App WebBLE' + '\n' +
+                    '- Linux & macOS: Use Chrome browser with activated flag' + '\n' +
+                    '  chrome://flags/#enable-experimental-web-platform-features' + '\n' +
+                    '- Windows 10: Use Chrome browser with plugin polyfill' + '\n' +
+                    '  https://github.com/urish/web-bluetooth-polyfill'
+                );
                 return log(
                     'Web Bluetooth API is not available in current used browser!' + '\n' +
                     '- Android: Use Chrome browser' + '\n' +
@@ -256,7 +265,7 @@
         </div>
     </div>
     <div class="container">
-        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.33</p>
+        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.34</p>
     </div>
 
 </body>
