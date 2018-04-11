@@ -28,10 +28,6 @@
         var temperatureChar;
         var outputStateChar;
 
-        var valueFlow;
-        var valueTemperature;
-        var valueOutputState;
-
 
         window.onload = function () {
             document.querySelector('#connect').addEventListener('click', connect);
@@ -162,7 +158,6 @@
             const flowValue = event.target.value;
             const flowRaw = flowValue.getInt16(0);
             const flow = flowRaw / 1000;
-            valueFlow = flow;
             document.querySelector("#fieldFlow").innerHTML = flow;
             log('Flow event: ' + flow + ' L/min')
         }
@@ -171,7 +166,6 @@
             const temperatureValue = event.target.value;
             const tempRaw = temperatureValue.getInt16(0);
             const temp = tempRaw / 10;
-            valueTemperature = temp;
             document.querySelector("#fieldTemperature").innerHTML = temp;
             log('Temperature event: ' + temp + ' °C')
         }
@@ -183,17 +177,13 @@
             if (outputStateRaw == 1) {
                 outputState = true;
             }
-            valueOutputState = outputState;
             document.querySelector("#fieldOutputState").innerHTML = outputState;
             log('Output state event: ' + outputState);
         }
 
 
         function log(text) {
-            //console.log(arguments);
             console.log(text + '\n');
-            //const logElm = document.querySelector('#log');
-            //logElm.textContent = text + '\n' + logElm.textContent;
         }
     </script>
 </head>
@@ -207,16 +197,14 @@
     </div>
 
     <div class="container">
-        <button type="button" class="btn btn-default" id="connect">Connect</button>
-        <button type="button" class="btn btn-default" id="disconnect">Disonnect</button>
-        <p></p>
-        <!--
-        <div>
-            <pre id="log"></pre>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" id="connect">Connect</button>
+            <button type="button" class="btn btn-default" id="disconnect">Disconnect</button>
         </div>
-        -->
+        <br>
+        <br>
         <div>
-            <h3 id="deviceName">---</h3>
+            <h3 id="deviceName"></h3>
         </div>
         <big>
             <div class="table-responsive-sm">
@@ -258,7 +246,7 @@
         </div>
     </div>
     <div class="container">
-        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.30</p>
+        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.31</p>
     </div>
 </body>
 
