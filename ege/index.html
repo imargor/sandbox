@@ -53,8 +53,8 @@
             navigator.bluetooth.requestDevice({
                     //acceptAllDevices: true,
                     filters: [
-                        //{services: [sensorServiceUUID]},
-                        {namePrefix: 'SDNC'}
+                        {services: sensorServiceUUID},
+                        //{namePrefix: 'SDNC'}
                     ],
                     optionalServices: [sensorServiceUUID]
                 })
@@ -169,7 +169,7 @@
         <div class="container">
             <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">EGE Hands On</h1>
             <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Web Bluetooth interacts with sensor</p>
-            <p style="color: #095277;font-size: small">2018-04-11 // mgo // 0.17</p>
+            <p style="color: #095277;font-size: small">2018-04-11 // mgo // 0.18</p>
         </div>
     </div>
 
