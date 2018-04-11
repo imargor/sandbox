@@ -72,7 +72,7 @@
                         UUIDs: device.uuids,
                         Device: device
                     });
-                    document.querySelector("#deviceName").innerHTML = device.Name;
+                    document.querySelector("#deviceName").innerHTML = device.name;
                     log('Connected to device: ' + device.name);
 
                     return device.gatt.connect();
@@ -149,6 +149,7 @@
             if (bleDevice.gatt.connected) {
                 bleDevice.gatt.disconnect();
                 log('Bluetooth Device connected: ' + bleDevice.gatt.connected);
+                document.querySelector("#deviceName").innerHTML = "";
                 document.querySelector("#fieldFlow").innerHTML = "";
                 document.querySelector("#fieldTemperature").innerHTML = "";
                 document.querySelector("#fieldOutputState").innerHTML = "";
@@ -257,7 +258,7 @@
         </div>
     </div>
     <div class="container">
-        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.29</p>
+        <p style="color: #dbdbdb;font-size: x-small">2018-04-11 // mgo // 0.30</p>
     </div>
 </body>
 
