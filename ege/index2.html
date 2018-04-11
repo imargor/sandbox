@@ -85,15 +85,15 @@
                     return flowChar.startNotifications();
                 })
                 .then(() => {
+                    log('Notifications for flow enabled');
+                    return flowChar.addEventListener('characteristicvaluechanged', handleNotifyFlow);
+                })
+                .then(() => {
                     log('Reading flow value...');
                     const flowValue2 = flowChar.readValue();
                     const flowRaw2 = flowValue2.getInt16(0);
                     const flow2 = flowRaw2 / 1000;
                     log('Current medium flow: ' + flow2 + ' L/min')
-                })
-                .then(() => {
-                    log('Notifications for flow enabled');
-                    return flowChar.addEventListener('characteristicvaluechanged', handleNotifyFlow);
                 })
                 .then(() => sensorService.getCharacteristic(temperatureCharacteristicUUID))
                 .then(characteristic => {
@@ -172,11 +172,11 @@
 </head>
 
 <body>
-    <div class="jumbotron" style="background: linear-gradient(to bottom, #006699 50%,#0f70a0 80%,#006699 100%)">
+    <div class="jumbotron" style="background: linear-gradient(to bottom, #faba31 50%,#e4a00d 80%,#faba31 100%)">
         <div class="container">
-            <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">EGE Hands On</h1>
-            <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #095277">Web Bluetooth interacts with sensor</p>
-            <p style="color: #095277;font-size: small">2018-04-11 // mgo // 0.21</p>
+            <h1 style="color:#FFFFFF; text-shadow: 2px 2px 10px #e4aa2c">EGE Hands On</h1>
+            <p style="color:#FFFFFF; text-shadow: 2px 2px 10px #e4aa2c">Web Bluetooth interacts with sensor</p>
+            <p style="color: #ca9626;font-size: small">2018-04-11 // mgo // 0.22</p>
         </div>
     </div>
 
