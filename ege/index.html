@@ -37,6 +37,7 @@
                 return log('Web Bluetooth API is not available in browser.');
             }
             log('=============================');
+            log('v0.1');
             log('Requesting Bluetooth Device...');
 
             navigator.bluetooth.requestDevice({
@@ -132,9 +133,9 @@
             log('temperature integer:' + integer);
             const decimal = temperatureValue.getUint8(1);
             log('temperature decimal:' + decimal);
-            const temperature = integer + '.' + decimal + ' deg';
+            const temperature = integer + ',' + decimal;
             log('temperature event: ' + temperature);
-            log('temp: ', integer, decimal)
+            log('temp: ' + integer, decimal)
         }
 
         function handleNotifyOutputState(event) {
