@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EGE Demo - Web Bluetooth</title>
-    <meta name="description" content="Monitor flow, flow and output state from a EGE sensor with a Web Bluetooth app">
+    <meta name="description" content="Monitor flow, temperature and output state from a EGE sensor with a Web Bluetooth app">
     <!-- TODO: manfifest -->
     <!-- TODO: favicon -->
 
@@ -130,8 +130,9 @@
             const temperatureValue = event.target.value;
             const integer = temperatureValue.getInt8(0);
             const decimal = temperatureValue.getUint8(1);
-            const temperature = integer + ',' + decimal;
-            log('temperature event: ' + temperature, integer, decimal)
+            const temperature = integer + '.' + decimal + ' deg';
+            log('temperature event: ' + temperature);
+            log('temp: ', integer, decimal)
         }
 
         function handleNotifyOutputState(event) {
@@ -150,6 +151,7 @@
 </head>
 
 <body>
+    <h1>EGE Demo - Web Bluetooth</h1>
     <button id="connect">Connect</button>
     <button id="disconnect">Disonnect</button>
     <div>
