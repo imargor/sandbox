@@ -116,14 +116,10 @@
         }
 
         function handleNotifyFlow(event) {
-            //const flowValue = event.target.value;
-            //console.log("flowValue", flowValue.length, flowValue.getUint8())
-            //log("flowValue", flowValue.length, flowValue.getUint8())
-
-            //const integer = flowValue.getInt(0);
-            //const decimal = flowValue.getUint8(1);
-            //const flow = integer + ',' + decimal;
-            //log('flow event: ' + flow, integer, decimal);
+            const flowValue = event.target.value;
+            const flowRaw = flowValue.getInt16(0);
+            const flow = flowRaw / 1000;
+            log('Temperature event: ' + temp + ' L/min')
         }
 
         function handleNotifyTemperature(event) {
@@ -131,11 +127,6 @@
             const tempRaw = temperatureValue.getInt16(0);
             const temp = tempRaw / 10;
             log('Temperature event: ' + temp + ' °C')
-            //const decimal = temperatureValue.getUint8(1);
-            //log('temperature decimal:' + decimal);
-            //const temperature = integer + ',' + decimal;
-            //log('temperature event: ' + temperature);
-            //log('temp: ' + integer, decimal)
         }
 
         function handleNotifyOutputState(event) {
@@ -155,7 +146,7 @@
 
 <body>
     <h1>EGE Demo - Web Bluetooth</h1>
-    <p>v0.5</p>
+    <p>v0.6</p>
     <button id="connect">Connect</button>
     <button id="disconnect">Disonnect</button>
     <div>
